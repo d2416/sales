@@ -18,11 +18,5 @@ public interface IBaseServiceable <T, ID>{
 	void delete (T t);
 	
 	void deleteByID (ID id);
-	
-	
-	
 
-	
-
-	
 }

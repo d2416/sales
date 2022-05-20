@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import com.salesianostriana.dam.correduriacrm.security.Usuario;
 import com.salesianostriana.dam.correduriacrm.security.UsuarioRepo;
 
@@ -62,5 +61,3 @@ public class MainController {
 	}
 
 }
-
-

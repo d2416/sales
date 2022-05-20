@@ -27,6 +27,8 @@ public class Cliente {
 
     private String apellidos;
 
+    private String genero;
+
     private String dni;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -39,15 +41,8 @@ public class Cliente {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaAlta;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate fechaBaja;
-
     private boolean esPremium;
 
-    /*
-     * 	@ManyToOne
-     *  private Empleado empleado;
-     */
 
 
 }
