@@ -7,11 +7,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.salesianostriana.dam.correduriacrm.model.Empleado;
 import com.salesianostriana.dam.correduriacrm.repository.EmpleadoRepository;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class MainController {
@@ -24,11 +25,14 @@ public class MainController {
        
         //model.addAttribute("usuario", user.getUsername());
     	Optional<Empleado> elUsuario = empleadoRepo.findUserByUsername(user.getUsername());
-    
+    	
     	if(elUsuario.isPresent()){
     		model.addAttribute("usuario", elUsuario.get());
+    	}else {
+    		return "error404";
     	}
-        return "admin/index";
+    	
+        return "dashboard/admin/admin";
     }
 
 
@@ -36,9 +40,16 @@ public class MainController {
     public String login() {
         return "login";
     }
+    
+    @GetMapping("/redirect")
+    public String redirect() {
+    	return "redirect:/login-login-in";
+    }
+    
 
-
-	@PostMapping("/login")
+    
+    /*
+	@GetMapping("/login-in")
 	public String autentificar(Empleado empleado, Model model) {
 
 		Optional<Empleado> elUsuario = empleadoRepo.findUserByUsername(empleado.getUsername());
@@ -47,19 +58,22 @@ public class MainController {
 			Empleado empl = elUsuario.get();
 
 			if (empl.getRole().equals("USER")) {
-				return "index";
+				//model.addAttribute("usuario", elUsuario.get());
+				return "dashboard/admin/admin";
 			} else if (empl.getRole().equals("ADMIN")) {
 				//model.addAttribute("usuario", elUsuario.get());
-				return "admin/admin";
+				return "admin/user/admin";
 			}
 		}
 		return "index";
 	}
+*/
+    
 
     @GetMapping("/login-error")
     public String loginError(Model model) {
     	model.addAttribute("loginError", true);
-        return "index.html";
+        return "login";
     }
     
     @GetMapping("/private")
@@ -82,4 +96,5 @@ public class MainController {
 		return "error404";
 	}
 */
+	
 }
