@@ -1,18 +1,16 @@
 package com.salesianostriana.dam.correduriacrm.security;
 
+import com.salesianostriana.dam.correduriacrm.repository.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-
-import com.salesianostriana.dam.correduriacrm.repository.EmpleadoRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -29,22 +27,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable()
-                .authorizeRequests()
+        http.authorizeRequests().antMatchers("/").permitAll()
+                .and()
+                .authorizeRequests().antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/assets/**").permitAll()
                 .antMatchers("/dashboard/user/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/dashboard/admin/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
                 .and()
-                    .exceptionHandling().accessDeniedPage("/error")
+                .exceptionHandling().accessDeniedPage("/error")
                 .and()
-                    .formLogin()
-                    .loginPage("/")
-                    .loginProcessingUrl("/login")
-                    .defaultSuccessUrl("/dashboard/user")
-                    .failureUrl("/login-error").permitAll()
+                .formLogin()
+                .loginPage("/")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/dashboard/user")
+                .failureUrl("/login-error").permitAll()
                 .and()
-                    .logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll();
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll();
+        http.csrf()
+                //.ignoringAntMatchers("/h2-console/**")
+                .disable();
+        http.headers().frameOptions().disable();
 
 
 //        http
@@ -61,7 +64,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                		.failureUrl("/login-error").permitAll()
 //                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll();
 //
-//        http.headers().frameOptions().disable();
     }
 
     @Bean
@@ -75,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .map(u -> {
                     return User
                             .withUsername(u.getUsername())
-                            .password("{noop}"+ u.getPassword())
+                            .password("{noop}" + u.getPassword())
                             .roles(u.getRole())
                             .build();
 
@@ -84,14 +86,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         return userDetailsManager;
-
-
-    }
-    
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-            .ignoring()
-            .antMatchers("/h2-console/**");
     }
 }
