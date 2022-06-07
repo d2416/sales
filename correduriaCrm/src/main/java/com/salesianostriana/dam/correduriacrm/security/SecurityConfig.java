@@ -28,22 +28,40 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
+
+        http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasAnyRole("USER", "ADMIN") //estas rutas son controladores
-                .antMatchers("/admin/privado/**").hasRole("ADMIN")
-                .antMatchers("/h2-console").permitAll()
                 .antMatchers("/assets/**").permitAll()
-                .anyRequest().authenticated()
-                //.anyRequest().permitAll()
-                .and().exceptionHandling().accessDeniedPage("/error403")
-                .and().formLogin().loginPage("/login").loginProcessingUrl("/login")
-                		.defaultSuccessUrl("/private")
-                		.failureUrl("/login-error").permitAll()
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll();
-        
-        http.headers().frameOptions().disable();
+                .antMatchers("/dashboard/user/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/dashboard/admin/**").hasRole("ADMIN")
+                .anyRequest().permitAll()
+                .and()
+                    .exceptionHandling().accessDeniedPage("/error")
+                .and()
+                    .formLogin()
+                    .loginPage("/")
+                    .loginProcessingUrl("/login")
+                    .defaultSuccessUrl("/dashboard/user")
+                    .failureUrl("/login-error").permitAll()
+                .and()
+                    .logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll();
+
+
+//        http
+//                .csrf().disable()
+//                .authorizeRequests()
+//                .antMatchers("/admin/**").hasAnyRole("USER", "ADMIN") //estas rutas son controladores
+//                .antMatchers("/admin/privado/**").hasRole("ADMIN")
+//                .antMatchers("/h2-console").permitAll()
+//                .anyRequest().authenticated()
+//                //.anyRequest().permitAll()
+//                .and().exceptionHandling().accessDeniedPage("/error403")
+//                .and().formLogin().loginPage("/login").loginProcessingUrl("/login")
+//                		.defaultSuccessUrl("/private")
+//                		.failureUrl("/login-error").permitAll()
+//                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll();
+//
+//        http.headers().frameOptions().disable();
     }
 
     @Bean

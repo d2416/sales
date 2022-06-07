@@ -11,8 +11,8 @@
   <meta name="keywords" content="seguros, insurance, venta, contratar, consultoría, asesoramiento, mejor correduría, mejores precios">
 
   <!-- Favicons -->
-  <link th:href="@{assets/img/logo/insuraBroker32.png}" href="../static/assets/img/logo/insuraBroker32.png" rel="icon">
-  <link th:href="@{assets/img/logo/insuraBroker180.png}" href="../static/assets/img/logo/insuraBroker180.png" rel="apple-touch-icon">
+  <link th:href="@{assets/img/logo/insuraBroker32.png}" rel="icon">
+  <link th:href="@{assets/img/logo/insuraBroker180.png}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900" rel="stylesheet">
@@ -49,7 +49,7 @@
         data-aos-easing="ease-in-back"
         data-aos-duration="1500">
         <div class="hero-logo">
-          <img class="" th:src="@{assets/img/logo/insuraBroker500.svg}" src="../static/assets/img/logo/insuraBroker500.svg" alt="InsuraBroker Logo">
+          <img class="" th:src="@{assets/img/logo/insuraBroker500.svg}" alt="InsuraBroker Logo">
         </div>
         <h1>Bienvenidos a</h1>
         <div class="d-flex justify-content-center align-items-center">
@@ -67,7 +67,7 @@
 
       <div class="d-flex logo">
         <h1><a th:href="@{#}" href="#"><span>I</span>nsura Broker</a></h1>
-        <img th:src="@{assets/img/logo/insuraBroker250.png}" src="../static/assets/img/logo/insuraBroker250.png" alt="InsuraBroker Logo" class="logoNavbar d-inline-flex ms-2 mt-1 align-text-top">
+        <img th:src="@{assets/img/logo/insuraBroker250.png}" alt="InsuraBroker Logo" class="logoNavbar d-inline-flex ms-2 mt-1 align-text-top">
       </div>
 
       <nav id="navbar" class="navbar">
@@ -103,7 +103,8 @@
 
         <div class="carousel-inner" role="listbox">
 
-          <div class="carousel-item active" style="background-image: url(../static/assets/img/hero-carousel/1.jpg)">
+          <div class="carousel-item active"
+               th:style="'background-image:url(' + @{/assets/img/hero-carousel/1.jpg} + ')'">
             <div class="carousel-container">
               <div class="container">
                 <h2 class="animate__animated animate__fadeInDown">Una empresa dedicada a ti </h2>
@@ -113,7 +114,8 @@
             </div>
           </div>
 
-          <div class="carousel-item" style="background-image: url(../static/assets/img/hero-carousel/2.jpg)">
+          <div class="carousel-item"
+               th:style="'background-image:url(' + @{/assets/img/hero-carousel/2.jpg} + ')'">
             <div class="carousel-container">
               <div class="container">
                 <h2 class="animate__animated animate__fadeInDown">At vero eos et accusamus</h2>
@@ -123,7 +125,8 @@
             </div>
           </div>
 
-          <div class="carousel-item" style="background-image: url(../static/assets/img/hero-carousel/3.jpg)">
+          <div class="carousel-item"
+               th:style="'background-image:url(' + @{/assets/img/hero-carousel/3.jpg} + ')'">
             <div class="carousel-container">
               <div class="container">
                 <h2 class="animate__animated animate__fadeInDown">Tempor ibus autem quibusdam</h2>
