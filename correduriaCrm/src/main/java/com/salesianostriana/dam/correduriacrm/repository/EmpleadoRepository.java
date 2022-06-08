@@ -1,15 +1,13 @@
 package com.salesianostriana.dam.correduriacrm.repository;
 
+import com.salesianostriana.dam.correduriacrm.model.Empleado;
+import org.springframework.stereotype.Repository;
+
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
-import javax.annotation.PostConstruct;
-
-import org.springframework.stereotype.Repository;
-
-import com.salesianostriana.dam.correduriacrm.model.Empleado;
 
 @Repository
 public class EmpleadoRepository {
@@ -19,6 +17,7 @@ public class EmpleadoRepository {
 		return Collections.unmodifiableList(empleados);
 	}
 
+	
 	public Optional<Empleado> findUserByUsername(String username) {
 		return empleados.stream()
 				.filter(u -> u.getUsername().equals(username))
@@ -52,7 +51,7 @@ public class EmpleadoRepository {
 				.imagen(null)
 				.fechaNacimiento(LocalDate.of(1993, 3, 21))
 				.username("user")
-				.password("user")
+				.password("1234")
 				.role("USER")
 				.telefono("687941358")
 				.email("mariatroyano@gmail.com")
@@ -68,7 +67,7 @@ public class EmpleadoRepository {
 				.imagen(null)
 				.fechaNacimiento(LocalDate.of(1990, 7, 15))
 				.username("sergio")
-				.password("sergio")
+				.password("user1234")
 				.role("USER")
 				.telefono("645894561")
 				.email("sergiojimenez@gmail.com")
@@ -84,7 +83,7 @@ public class EmpleadoRepository {
 				.imagen(null)
 				.fechaNacimiento(LocalDate.of(1998, 12, 4))
 				.username("eva")
-				.password("eva")
+				.password("user1234")
 				.role("USER")
 				.telefono("678159753")
 				.email("evareyes@gmail.com")

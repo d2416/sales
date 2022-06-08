@@ -1,16 +1,12 @@
 package com.salesianostriana.dam.correduriacrm.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -43,6 +39,13 @@ public class Cliente {
 
     private boolean esPremium;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy="cliente", fetch = FetchType.EAGER)  //¿debo añadirlo a la base de datos?
+    @Builder.Default
+    private List<Venta> ventas = new ArrayList <> ();
+    
+   
 
 
 }

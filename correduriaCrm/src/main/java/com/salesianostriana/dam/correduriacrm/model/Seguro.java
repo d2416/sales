@@ -4,40 +4,43 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
-import java.time.LocalDate;
+import javax.persistence.*;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Seguros {
+public class Seguro {
     
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long idSeguro;
 	
 	@ManyToOne
-	private Categoria categoria;  //idCategoria
+	@JoinColumn(name="id_categoria")
+	private Categoria categoria;  
 
     private String tipo;
 
     private double cantidadAsegurada;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate fechaAlta;
-
+    private double precio;
+    
     private String empresa;
 
     private String icono;
-
+      
+    // helpers
+    public void addToCategoria(Categoria cat) { 
+		this.setCategoria(cat);
+		cat.getSeguros().add(this);
+	}
+	
+	public void removeFromCategoria(Categoria cat) {
+		this.setCategoria(cat);
+		cat.getSeguros().remove(this);
+	}
 
 }
