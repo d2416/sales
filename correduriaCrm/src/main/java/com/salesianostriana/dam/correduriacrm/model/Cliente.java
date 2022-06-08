@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.GenerationType.SEQUENCE;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -16,7 +18,16 @@ import java.util.List;
 public class Cliente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name = "cliente_sequence",
+            sequenceName = "cliente_sequence",
+            allocationSize = 1
+    )
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(
+            strategy = SEQUENCE,
+            generator = "cliente_sequence"
+    )
     private long idCliente;
 
     private String nombre;
