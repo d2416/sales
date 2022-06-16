@@ -6,9 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.time.LocalDate;
 
 
@@ -18,8 +15,6 @@ import java.time.LocalDate;
 @Builder
 public class Empleado {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idEmpleado;
 	
     private String nombre;
@@ -50,5 +45,11 @@ public class Empleado {
 
     private Double Salario;
     
-
+	public String getImagen() {
+		if (imagen == null) {
+			return "https://robohash.org/"+username;
+		}
+		return imagen;
+	}
+	
 }

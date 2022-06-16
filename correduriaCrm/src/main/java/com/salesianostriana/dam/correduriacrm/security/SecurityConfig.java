@@ -18,6 +18,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private EmpleadoRepository empleados;
+    
+    @Autowired
+    private SecurityHandler successLoginHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -29,21 +32,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("/").permitAll()
                 .and()
-                .authorizeRequests().antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/assets/**").permitAll()
-                .antMatchers("/dashboard/user/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/dashboard/admin/**").hasRole("ADMIN")
-                .anyRequest().permitAll()
+	                .authorizeRequests().antMatchers("/h2-console/**").permitAll()
+	                .antMatchers("/assets/**").permitAll()
+	                .antMatchers("/dashboard/user/**").hasAnyRole("USER", "ADMIN")
+	                .antMatchers("/dashboard/admin/**").hasRole("ADMIN")
+	                .anyRequest().permitAll()
                 .and()
-                .exceptionHandling().accessDeniedPage("/error")
+                	.exceptionHandling()
+                	.accessDeniedPage("/error")
                 .and()
-                .formLogin()
-                .loginPage("/")
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/dashboard/user")
-                .failureUrl("/login-error").permitAll()
+	                .formLogin()
+	                .loginPage("/")
+	                .loginProcessingUrl("/login")
+	                //defaultSuccessUrl("/admin/")
+	                .successHandler(successLoginHandler)
+	               
+	                .failureUrl("/login-error").permitAll()
                 .and()
-                .logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll();
+                	.logout()
+                	.logoutUrl("/logout")
+                	.logoutSuccessUrl("/")
+                	.permitAll();
         http.csrf()
                 //.ignoringAntMatchers("/h2-console/**")
                 .disable();
@@ -65,6 +74,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll();
 //
     }
+    
+    //https://www.baeldung.com/spring_redirect_after_login
 
     @Bean
     @Override
@@ -88,3 +99,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return userDetailsManager;
     }
 }
+    
+   /* 
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web
+            .ignoring()
+            .antMatchers("/h2-console/**");
+    }
+    */

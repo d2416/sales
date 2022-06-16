@@ -8,7 +8,7 @@
     <meta name="description" content="Venta de seguros, la mejor consultoría y correduría de seguros">
     <meta name="keywords" content="seguros, insurance, venta, contratar, consultoría, asesoramiento, mejor correduría, mejores precios">
     
-    <title>Insura Broker - Admin Dashboard</title>
+    <title>Insura Broker - Admin Seguros</title>
     
     <!-- Favicons -->
     <link th:href="@{/assets/img/logo/insuraBroker32.png}" href="../static/assets/img/logo/insuraBroker32.png" rel="icon">
@@ -36,6 +36,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 	<script defer th:src="@{/assets/js/admin.js}" src='../../../static/assets/js/admin.js'></script>
 </head>
+
 <body id="top">
     <div class="d-flex" id="wrapper">
         <!-- Sidebar -->
@@ -43,12 +44,12 @@
             <div class="list-group list-group-flush my-3 ">
                 <h5 class="sidebar-heading text-center fw-bold fs-3 border-bottom"><span id="Insura">I</span>nsura Broker</h5>
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-2 ">
-                    <li class="nav-item active">
-                        <a class="nav-link" th:href="@{/admin/}" aria-current="page" href="#http://localhost:9000/dashboard/admin/index/">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/}" aria-current="page" href="#">
                             <i class="bi bi-grid-3x3-gap-fill shadow m-2"></i>DashBoard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/admin/venta}" href="#"><i class="bi bi-coin shadow m-2 lead"></i>Ventas</a>
+                        <a class="nav-link active" th:href="@{/admin/venta}" href="#"><i class="bi bi-coin shadow m-2 lead"></i>Ventas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="bi bi-bar-chart-line-fill shadow m-2 lead"></i>Gráficos</a>
@@ -71,7 +72,7 @@
                             <li><a class="dropdown-item" th:href="@{/admin/tables/categoria}" href="#"><i class="bi bi-bookmark-fill shadow me-2 lead"></i>Categorías</a></li>
                             <li><a class="dropdown-item" th:href="@{/admin/tables/seguro}" href="#"><i class="bi bi-shield-shaded shadow me-2 lead"></i>Seguros</a></li>
                             <li><a class="dropdown-item" th:href="@{/admin/tables/cliente}" href="#"><i class="bi bi-person-lines-fill shadow me-2 lead"></i>Clientes</a></li>
-                            <li>
+                             <li>
                                 <hr class="dropdown-divider bg-light"/>
                             </li>
                             <li><a class="dropdown-item" href="#"><i class="bi bi-person-circle shadow me-2 lead"></i>Empleados</a></li>
@@ -79,107 +80,125 @@
                     </li>
                     <hr/>
                     <li class="nav-item">
-                        <a th:href="@{/logout}" class="nav-link" href="../../index.html" alt="salir"><i class="bi bi-power shadow m-2 lead text-danger"></i>Log-out</a>
+                        <a class="nav-link" href="#"><i class="bi bi-power shadow m-2 lead text-danger"></i>Log-out</a>
                     </li>           
                 </ul>
             </div>
         </div>
-        <!-- /#sidebar-wrapper -->
+         <!-- /#sidebar-wrapper -->
         <!-- Page Content -->    
-        <div id="page-content-wrapper">
+        <div id="page-content-wrapper">      
             <header>       
                 <!-- Start NavBar -->
                 <nav th:replace="~{fragments/nav::nav}"></nav>
                 <!-- End NavBar -->
-            </header>    
+            </header>
 
             <section>  
                 <div class="container-fluid d-flex-block flex-wrap my-4 px-4">
+                    <div th:if="${param.success}" class="alert alert-warning alert dismissible" role="alert">
+	                	<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+					  	¡Venta borrada con éxito!
+					</div>
+					<div th:if="${param.error}" class="alert alert-danger d-flex-inline alert dismissible" role="alert">
+	               	 	<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+					  	¡No se puede borrar este elemento!
+					</div>
                     <!-- Breadcrumb -->
-                    <div class="pagetitle">
-                        <h1>Dashboard</h1>
+                    <div class="pagetitle px-4">
+                        <h1>Ventas</h1>
                         <nav>
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a th:href="@{/admin/}" href="index.html" class="active">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a th:href="@{/admin/}" href="index.html">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Ventas</li>
                         </ol>
                         </nav>
                     </div>
                     <!-- End Breadcrumb -->
-                    <div class="row flex-wrap g-3 my-2 ">
+                    <div class="row flex-wrap g-3 my-2 px-4">
                     <!-- Reports -->
                         <div class="col-md-3">
                             <div class="p-3 bg-white shadow-lg d-flex justify-content-around align-items-center rounded">
                                 <div>
-                                    <h3 class="fs-2" th:text="${numeroDeClientes}">número</h3>
-                                    <p class="fs-5">Clientes activos</p>
-                                </div>
-                                <i class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"></i>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="p-3 bg-white shadow-lg d-flex justify-content-around align-items-center rounded">
-                                <div>
-                                    <h3 class="fs-2" th:text="${#numbers.formatCurrency(ventasTrimestre)}">dinero ganado</h3>
-                                    <p class="fs-5">Recaudado trimestre</p>
+                                    <h3 class="fs-2">cantidad</h3>
+                                    <p class="fs-5">Clientes Premium</p>
                                 </div>
                                 <i class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
                             </div>
                         </div>
-
                         <div class="col-md-3">
                             <div class="p-3 bg-white shadow-lg d-flex justify-content-around align-items-center rounded">
                                 <div>
-                                    <h3 class="fs-2">numero de ventas</h3>
-                                    <p class="fs-5">Ventas año</p>
+                                    <h3 class="fs-2">número</h3>
+                                    <p class="fs-5">Gasto medio por cliente</p>
                                 </div>
                                 <i class="fas fa-truck fs-1 primary-text border rounded-full secondary-bg p-3"></i>
                             </div>
                         </div>
-
-                        <div class="col-md-3">
-                            <div class="p-3 bg-white shadow-lg d-flex justify-content-around align-items-center rounded">
-                                <div>
-                                    <h3 class="fs-2">% diferencia</h3>
-                                    <p class="fs-5">Diferencia mes 2020</p>
-                                </div>
-                                <i class="fas fa-chart-line fs-1 primary-text border rounded-full secondary-bg p-3"></i>
-                            </div>
-                        </div>
                     </div>
                     <!-- End Reports -->
-                    <div class="row flex-wrap my-4">
+                    <div class="row flex-wrap my-4 px-4">
                         <!-- Tables -->
-                        <h3 class="fs-4 mb-1 mt-1">Empleados</h3>
+                        <h3 class="fs-4 mb-1 mt-1">Ventas</h3>
                         <div class="col table-responsive">
-                            <table class="table caption-top bg-white rounded shadow-sm table-striped table-hover" summary="Tabla de categorías de Insura Broker"> 
-                                <caption>Lista de empleados que tiene Insura Broker</caption>
+                            <table class="table caption-top bg-white m-auto rounded shadow-sm table-striped table-hover" summary="Tabla de categorías de Insura Broker"> 
+                                <caption>Ventas de Insura Broker</caption>
                                 <thead>
                                     <tr class="table-primary">
-                                        <th scope="col" width="50">Fila</th>
-                                        <th scope="col" class="text-center">Nombre</th>
-                                        <th scope="col" class="text-center">Apellidos</th>
-                                        <th scope="col" class="text-center">DNI</th>
-                                        <th scope="col" class="text-center">Fecha Nacimiento</th>
-                                        <th scope="col" class="text-center">Teléfono</th>
-                                        <th scope="col" class="text-center">Email</th>
-                                        <th scope="col" class="text-center">Fecha Alta</th>
-                                        <th scope="col" class="text-center">Cargo</th>
-                                        <th scope="col" class="text-center">Salario</th>
+                                        <th scope="col" width="50">ID</th>
+                                        <th scope="col" class="text-center">IDCliente</th>  
+                                        <th scope="col" class="text-center">IDSeguro</th>
+                                        <th scope="col" class="text-center">Vendedor</th>
+                                        <th scope="col" class="text-center">Fecha venta</th>
+										<th scope="col" class="text-center">Activa</th>
+                                        <th scope="col" class="text-center">Precio Final</th>
+                                        <th scope="col" class="text-center">Descuento</th>
+                                        <th scope="col" class="text-info text-center">Editar</th>
+                                        <th scope="col" class="text-danger text-center">Eliminar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="empleado : ${listaEmpleados}" >
-                                        <th scope="row" th:text="${empleado.idEmpleado}">Fila</th>
-                                        <td scope="col" class="text-center" th:text="${empleado.nombre}">Nombre</th>
-                                        <td scope="col" class="text-center" th:text="${empleado.apellidos}">Apellidos</th>
-                                        <td scope="col" class="text-center" th:text="${empleado.dni}">DNI</th>
-                                        <td scope="col" class="text-center" th:text="${#temporals.format(empleado.fechaNacimiento, 'dd-MM-yyyy')}">Fecha Nacimiento</th>
-                                        <td scope="col" class="text-center" th:text="${empleado.telefono}">Teléfono</th>
-                                        <td scope="col" class="text-center" th:text="${empleado.email}">Email</th>
-                                        <td scope="col" class="text-center" th:text="${#temporals.format(empleado.fechaAlta, 'dd-MM-yyyy')}">Fecha Alta</th>
-                                        <td scope="col" class="text-center" th:text="${empleado.cargo}">Cargo</th>
-                                        <td scope="col" class="text-center" th:text="${empleado.salario}">Salario</th>
+                                    <tr th:each="venta : ${listaVentas}">
+                                        <th scope="row" th:text="${venta.idVenta}">ID</th>
+                                        <td class="text-center" scope="col" th:text="${venta.cliente.idCliente}">Id Cliente</td>
+                                        <td class="text-center" scope="col" th:text="${venta.seguro.idSeguro}">Id Seguro</td>
+                                        <td class="text-center" scope="col" th:text="${venta.empleado}">empleado</td>
+                                        <td class="text-center" scope="col" th:text="${#temporals.format(venta.fecha_venta, 'dd-MM-yyyy')}">Fecha venta</td>
+                                        <td class="text-center" scope="col" th:text="${venta.esActivo}">activo</td>
+                                        <td class="text-center" scope="col" th:text="${#numbers.formatCurrency(venta.precioVenta)}">precio final</td>
+                                        <td class="text-center" scope="col" th:text="${#numbers.formatCurrency(venta.descuento)}">descuento</td>
+                                        <td class="text-center"><button type="button" class="btn btn-info btn-floating rounded-circle">
+                                            <i class="bi bi-pen-fill"></i>
+                                            </button>
+                                        </td>
+                                        	<td class="text-center"><button type="button" class="btn btn-danger rounded-circle" data-bs-toggle="modal"
+											th:attr="data-bs-target='#myModalDelete'+${venta.idVenta}"><i class="bi bi-trash"></i></button>
+										</td>
+									<!--The Modal-->
+									<div class="modal" id="myModalDel" th:id="'myModalDelete'+${venta.idVenta}">
+										<div class="modal-dialog">
+											<div class="modal-content">
+		
+												<!--Modal Header-->
+												<div class="modal-header">
+													<h5 class="modal-title">Eliminar</h5>
+													<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+												</div>
+												<!--Modal body-->
+												<div class="modal-body">
+													<p>¿Esta seguro que desea eliminar este elemento?</p>
+												</div>
+												<!--Modal footer-->
+												<div class="modal-footer">
+										        <a th:href="@{/admin/venta}" class="btn btn-info btn-floating rounded-circle">
+		                                            <i class="bi bi-arrow-return-left"></i></a>
+										        <a th:href="@{/admin/eliminar/venta/{id}(id=${venta.idVenta})}" class="btn btn-danger btn-floating rounded-circle">
+	                                            	<i class="bi bi-trash"></i></a>
+										        </div>
+											</div>
+										</div>
+									</div>   
+									<!-- End Modal -->
                                     </tr>
                                 </tbody>
                             </table>
@@ -187,13 +206,13 @@
                         <!-- End Table -->
                     </div>
                 </div>
-            </section>    
+            </section>   
         </div>
-        <!-- End Content Wrapper -->
+    	<!-- End Content Wrapper -->
     </div>
-        <!-- Footer Start-->
-        <footer th:replace="~{fragments/footer::footer}"></footer>
-        <!-- End: footer -->   
-    <a th:href="@{#top}" href="#top" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-</body>
-</html>
+   	 	<!-- Footer Start-->
+	    <footer th:replace="~{fragments/footer::footer}"></footer>
+	    <!-- End: footer --> 
+	<a th:href="@{#top}" href="#top" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+</body>    
+</html> 

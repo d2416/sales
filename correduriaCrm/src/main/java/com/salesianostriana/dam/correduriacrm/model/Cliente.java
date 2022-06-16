@@ -23,7 +23,7 @@ public class Cliente {
             sequenceName = "cliente_sequence",
             allocationSize = 1
     )
-//    @GeneratedValue(strategy = GenerationType.AUTO)
+//  @GeneratedValue(strategy = GenerationType.AUTO)
     @GeneratedValue(
             strategy = SEQUENCE,
             generator = "cliente_sequence"
@@ -52,11 +52,8 @@ public class Cliente {
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @OneToMany(mappedBy="cliente", fetch = FetchType.EAGER)  //¿debo añadirlo a la base de datos?
+    @OneToMany(mappedBy="cliente", fetch = FetchType.EAGER)
     @Builder.Default
     private List<Venta> ventas = new ArrayList <> ();
     
-   
-
-
 }
